@@ -1,10 +1,8 @@
 package com.goeuro.service;
 
-import com.goeuro.request.Request;
+import org.json.JSONArray;
 
 public interface ICityDataService {
 	
-	
-	
-	public void getCityData(Request request);
+	public JSONArray getCityData(String cityName);
 }

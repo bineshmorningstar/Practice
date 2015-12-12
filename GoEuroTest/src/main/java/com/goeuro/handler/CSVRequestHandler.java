@@ -1,12 +1,13 @@
 package com.goeuro.handler;
 
-import com.goeuro.request.Request;
+import com.goeuro.writer.CSVWriter;
 
-public class CSVRequestHandler implements RequestHandler {
+public class CSVRequestHandler extends RequestHandler {
 
-	public void getCityData(Request request) {
-		
-
+	@Override
+	public void exportToFile(String cityName) {
+		CSVWriter csvWriter = new CSVWriter(cityName);
+		csvWriter.write(getCityData());
 	}
-
+	
 }

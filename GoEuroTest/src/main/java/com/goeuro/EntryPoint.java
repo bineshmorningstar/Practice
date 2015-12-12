@@ -1,6 +1,8 @@
 package com.goeuro;
 
 import com.goeuro.exception.NoInputException;
+import com.goeuro.handler.CSVRequestHandler;
+import com.goeuro.handler.RequestHandler;
 import com.goeuro.request.Request;
 
 public class EntryPoint 
@@ -9,7 +11,9 @@ public class EntryPoint
     {
         EntryPoint entry = new EntryPoint();
         try {
-        	entry.getCityData(args);	
+        	Request request = new Request(args);
+        	entry.getExportCityData(request);
+        	System.out.println("The data has been exported to file "+request.getCityName()+"."+request.getOutputFormat());
 		} catch (NoInputException e) {
 			System.out.println(e.getMessage());
 		} catch (Exception e) {
@@ -17,19 +21,10 @@ public class EntryPoint
 		}
     }
     
-    public void getCityData(String[] input) throws Exception{
-		if(input.length > 0){
-        	Request request = new Request();
-        	String cityName = input[0];
-        	request.setCityName(cityName);
-        	
-        	if(input.length == 1){
-            	request.setOutputFormat("CSV");	
-        	} else {
-        		request.setOutputFormat(input[1]);
-        	}
-        } else {
-        	throw new NoInputException("No Input Provided!!");
-        }
+    public void getExportCityData(Request request) {
+		if(request.getOutputFormat().equalsIgnoreCase("CSV")){
+			RequestHandler requestHandler = new CSVRequestHandler();
+			requestHandler.handleRequest(request);
+		}
     }
 }
